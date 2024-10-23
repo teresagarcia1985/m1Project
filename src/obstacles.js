@@ -4,8 +4,8 @@ class Obstacle {
 
     this.left = Math.floor(Math.random() * 1000);
     this.top = -200;
-    this.width = 70;
-    this.height = 130;
+    this.width = 60;
+    this.height = 100;
 
     this.element = document.createElement("img");
     this.element.style.position = "absolute";

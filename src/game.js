@@ -5,7 +5,7 @@ class Game {
     this.GameOverScreen = document.querySelector("#game-over");
     this.scoreElement = document.getElementById("score");
     this.livesElement = document.getElementById("lives");
-    this.player = new Player(200, 250, 225, 400, "images/Peter.png");
+    this.player = new Player(200, 340, 200, 300, "images/Peter.png");
     this.height = 600;
     this.width = 1000;
     this.obstacles = [new Obstacle()];
@@ -16,6 +16,8 @@ class Game {
     this.gameIntervalId = null;
     this.gameLoopFrequency = 1000 / 60;
     this.counter = 0;
+    this.Document = new Audio("../sounds/Document.wav");
+    this.energy = new Audio("../sounds/energy.wav");
   }
   start() {
     this.GameScreen.style.height = `${this.height}px`;
@@ -47,6 +49,7 @@ class Game {
         currentObstacle.element.remove();
         this.lives--;
         this.livesElement.innerText = this.lives;
+        this.Document.play();
       }
 
       //this checks the top of the obstacle and if it is greater than the height of the game screen ...
@@ -63,27 +66,28 @@ class Game {
       }
     }
     for (let i = 0; i < this.coffee.length; i++) {
-      const currentObstacle = this.coffee[i];
-      currentObstacle.move();
-      const coffeeIntake = this.player.coffeeIntake(currentObstacle);
+      const currentCoffee = this.coffee[i];
+      currentCoffee.move();
+      const coffeeIntake = this.player.coffeeIntake(currentCoffee);
 
       if (coffeeIntake) {
         this.coffee.splice(i, 1);
-        currentObstacle.element.remove();
+        currentCoffee.element.remove();
         this.lives++;
         this.livesElement.innerText = this.lives;
+        this.energy.play();
       }
 
       //this checks the top of the obstacle and if it is greater than the height of the game screen ...
       //then it increases the score and removes that obstacle
       //first increment the score
-      if (currentObstacle.top > this.height + 100) {
+      if (currentCoffee.top > this.height + 100) {
         this.score++;
         //remove the obstacle from the array
-        this.obstacles.splice(i, 1);
+        this.coffee.splice(i, 1);
         //update the DOM to reflect the new score
         this.scoreElement.innerText = this.score;
-        currentObstacle.element.remove();
+        currentCoffee.element.remove();
         i--;
       }
     }
@@ -99,7 +103,7 @@ class Game {
       this.GameOverScreen.style.display = "block";
     }
     //this adds a new obstacle to the array every so many frames
-    if (this.counter % 60 === 0) {
+    if (this.counter % 90 === 0) {
       this.obstacles.push(new Obstacle());
     }
   }
