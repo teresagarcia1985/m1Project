@@ -1,4 +1,4 @@
-class Obstacle {
+class Coffee {
   constructor() {
     this.gameScreen = document.querySelector("#game-screen");
 
@@ -9,7 +9,7 @@ class Obstacle {
 
     this.element = document.createElement("img");
     this.element.style.position = "absolute";
-    this.element.src = "images/document.png";
+    this.element.src = "images/coffee.png";
     this.element.style.height = `${this.height}px`;
     this.element.style.width = `${this.width}px`;
     this.element.style.top = `${this.top}px`;

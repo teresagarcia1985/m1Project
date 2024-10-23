@@ -6,21 +6,24 @@ window.onload = function () {
   startButton.addEventListener("click", function () {
     startGame();
   });
+  restartButton.addEventListener("click", () => {
+    window.location.reload();
+  });
   document.addEventListener("keydown", (event) => {
-    console.log("key pressed", event.code);
+    console.log("key pressed", ourGame);
     if (event.code === "ArrowRight") {
-      ourGame.player.directionX = 1;
+      ourGame.player.directionX = 5;
     }
     if (event.code === "ArrowLeft") {
-      ourGame.player.directionX = -1;
+      ourGame.player.directionX = -5;
     }
   });
   document.addEventListener("keyup", () => {
     ourGame.player.directionX = 0;
   });
   function startGame() {
-    console.log("start game");
-    const ourGame = new Game();
+    ourGame = new Game();
+    console.log("start game", ourGame);
     ourGame.start();
   }
 };

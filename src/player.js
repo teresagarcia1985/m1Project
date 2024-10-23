@@ -5,7 +5,7 @@ class Player {
     this.top = top;
     this.width = width;
     this.height = height;
-    this.directionX = -1;
+    this.directionX = 0;
     this.directionY = 0;
     this.element = document.createElement("img");
     this.element.style.position = "absolute";
@@ -17,13 +17,14 @@ class Player {
     this.gameScreen.appendChild(this.element);
   }
   move() {
-    if (this.left > 0 && this.left + this.width < 300) {
-      this.left += this.directionX;
-    }
+    this.left += this.directionX;
 
-    // if (this.top > 10 && this.top + this.height < 440) {
-    //   this.top += this.directionY;
-    // }
+    if (this.left < 20) {
+      this.left = 20;
+    }
+    if (this.left + this.width > 1000) {
+      this.left = 1000 - this.width;
+    }
 
     this.updatePosition();
   }
@@ -32,6 +33,22 @@ class Player {
     this.element.style.left = `${this.left}px`;
   }
   didReceiveDoc(obstacle) {
+    const playerRect = this.element.getBoundingClientRect();
+    const obstacleRect = obstacle.element.getBoundingClientRect();
+
+    if (
+      playerRect.left < obstacleRect.right &&
+      playerRect.right > obstacleRect.left &&
+      playerRect.top < obstacleRect.bottom &&
+      playerRect.bottom > obstacleRect.top
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  coffeeIntake(obstacle) {
     const playerRect = this.element.getBoundingClientRect();
     const obstacleRect = obstacle.element.getBoundingClientRect();
 
